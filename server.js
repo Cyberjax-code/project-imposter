@@ -48,13 +48,29 @@ function addPlayer(room, socket, name) {
 function playerRoom(id) {
   for (const r of rooms.values()) if (r.players.has(id)) return r;
 }
-if (room.players.size < 2 || room.phase !== "lobby") return false;
+function startGame(room) {
+  if (room.players.size < 2 || room.phase !== "lobby") return false;
+
   const ps = [...room.players.values()];
-  const impostor = ps[Math.floor(Math.random()*ps.length)];
-  ps.forEach(p => p.role = p.id === impostor.id ? "impostor" : "crew");
-  room.phase = "playing"; room.tasksDone = 0; room.tasksTotal = ps.length * 3;
-  room.bodies = []; room.votes = {}; room.winner = null;
-  room.players.forEach(p => {p.alive=true; p.x=(Math.random()-.5)*8; p.z=(Math.random()-.5)*8;});
+  const impostor = ps[Math.floor(Math.random() * ps.length)];
+
+  ps.forEach(p => {
+    p.role = p.id === impostor.id ? "impostor" : "crew";
+  });
+
+  room.phase = "playing";
+  room.tasksDone = 0;
+  room.tasksTotal = ps.length * 3;
+  room.bodies = [];
+  room.votes = {};
+  room.winner = null;
+
+  room.players.forEach(p => {
+    p.alive = true;
+    p.x = (Math.random() - 0.5) * 8;
+    p.z = (Math.random() - 0.5) * 8;
+  });
+
   return true;
 }
 function checkWin(room) {
