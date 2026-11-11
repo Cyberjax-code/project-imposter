@@ -6,7 +6,9 @@ const crypto = require("crypto");
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
-app.use(express.static("public"));
+app.get("/", (req, res) => {
+  res.status(200).send("PROJECT: IMPOSTOR server is running!");
+});
 
 const rooms = new Map();
 const COLORS = ["#ff5b5b","#45b7ff","#ffd447","#9b72ff","#55d68b","#ff9de1","#ff9b42","#72e0d1"];
@@ -148,4 +150,6 @@ io.on("connection", socket => {
 });
 
 const PORT=process.env.PORT||3000;
-server.listen(PORT,()=>console.log(`PROJECT: IMPOSTOR running on http://localhost:${PORT}`));
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`PROJECT: IMPOSTOR running on port ${PORT}`);
+});
