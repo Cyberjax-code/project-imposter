@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>PROJECT: IMPOSTOR</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header><div class="brand">PROJECT<span>:</span> IMPOSTOR</div><div id="roomTag" class="room-tag">NOT IN ROOM</div></header>
+  <main>
+    <section id="lobby" class="panel">
+      <p class="eyebrow">MULTIPLAYER SOCIAL DEDUCTION</p><h1>Trust is a<br><em>dangerous</em> game.</h1>
+      <p class="muted">Create a private room or join your friends with a room code.</p>
+      <label>Your callsign</label><input id="name" maxlength="16" placeholder="Enter player name" value="Crewmate">
+      <div class="actions"><button id="create">CREATE ROOM</button><div class="join"><input id="joinCode" maxlength="6" placeholder="ROOM CODE"><button id="join">JOIN</button></div></div>
+      <div id="lobbyRoom" class="hidden">
+        <div class="codebox"><small>SHARE THIS ROOM CODE</small><strong id="codeValue">------</strong><button id="copyCode" class="ghost">COPY</button></div>
+        <div class="settings"><label>MAP</label><select id="map"><option value="ship">The Asterion (Ship)</option><option value="lab">Cryo Lab</option></select>
+        <label>SUIT COLOR</label><div id="colors" class="colors"></div></div>
+        <h3>CREW MANIFEST <span id="count">0/8</span></h3><div id="players" class="player-list"></div>
+        <button id="start" class="wide">START MISSION (4–8 PLAYERS)</button><p class="tiny">Only the room host can start the mission. Minimum 4 players.</p>
+      </div>
+      <p id="error" class="error"></p>
+    </section>
+    <section id="game" class="hidden">
+      <div class="hud"><div><small>MISSION STATUS</small><strong id="mission">Awaiting deployment</strong></div><div><small>CREW TASKS</small><strong id="taskCount">0 / 0</strong></div><div><small>YOUR ROLE</small><strong id="role">UNKNOWN</strong></div></div>
+      <div id="world"><canvas id="scene"></canvas><div class="map-label" id="mapLabel">THE ASTERION</div><div id="notice" class="notice"></div></div>
+      <div class="controls"><div class="move-pad"><button data-move="up">▲</button><div><button data-move="left">◀</button><button data-move="down">▼</button><button data-move="right">▶</button></div></div>
+        <div class="game-actions"><button id="doTask">DO TASK</button><button id="report">REPORT / MEETING</button><button id="kill" class="danger">ELIMINATE</button></div>
+      </div>
+      <div id="meeting" class="meeting hidden"><h2>EMERGENCY MEETING</h2><p>Who do you suspect?</p><div id="voteList"></div><button id="skipVote" class="ghost">SKIP VOTE</button></div>
+      <div id="end" class="end hidden"></div>
+      <div class="chat"><div id="messages" class="messages"></div><form id="chatForm"><input id="chatInput" maxlength="180" placeholder="Send a message…"><button>SEND</button></form></div>
+    </section>
+  </main>
+  <footer>AN ORIGINAL SOCIAL-DEDUCTION GAME • PROTOTYPE 0.1</footer>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script type="module" src="game.js"></script>
+</body></html>
