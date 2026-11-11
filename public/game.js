@@ -31,7 +31,7 @@ socket.on("state",r=>{
  if(r.phase!=="lobby")showGame();
  $("count").textContent=r.players.length+"/8";
  $("players").innerHTML=r.players.map(p=>`<div class="player"><span class="dot" style="background:${p.color}"></span>${escapeHtml(p.name)} ${p.id===r.hostId?"★":""}</div>`).join("");
- $("start").disabled=r.players.length<4;
+ $("start").disabled=r.players.length<2;
  $("map").value=r.map;
  $("taskCount").textContent=`${r.tasksDone} / ${r.tasksTotal}`;
  $("mission").textContent=r.phase.toUpperCase();
