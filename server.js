@@ -2,13 +2,13 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const crypto = require("crypto");
+const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
-app.get("/", (req, res) => {
-  res.status(200).send("PROJECT: IMPOSTOR server is running!");
-});
+
+app.use(express.static(path.join(__dirname, "public")));
 
 const rooms = new Map();
 const COLORS = ["#ff5b5b","#45b7ff","#ffd447","#9b72ff","#55d68b","#ff9de1","#ff9b42","#72e0d1"];
