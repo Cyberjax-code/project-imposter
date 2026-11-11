@@ -48,8 +48,7 @@ function addPlayer(room, socket, name) {
 function playerRoom(id) {
   for (const r of rooms.values()) if (r.players.has(id)) return r;
 }
-function startGame(room) {
-  if (room.players.size < 4 || room.phase !== "lobby") return false;
+if (room.players.size < 2 || room.phase !== "lobby") return false;
   const ps = [...room.players.values()];
   const impostor = ps[Math.floor(Math.random()*ps.length)];
   ps.forEach(p => p.role = p.id === impostor.id ? "impostor" : "crew");
@@ -81,7 +80,7 @@ io.on("connection", socket => {
   });
   socket.on("startGame", () => {
     const r=playerRoom(socket.id); if (!r || r.hostId!==socket.id) return;
-    if (!startGame(r)) return socket.emit("notice","Need 4–8 players before starting.");
+    if (!startGame(r)) return socket.emit("notice","Need at least 2 players to start.");
     r.players.forEach(p=>io.to(p.id).emit("role",p.role));
     broadcast(r);
   });
